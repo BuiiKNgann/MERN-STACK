@@ -13,7 +13,7 @@ const HeaderComponent = () => {
     return (
         <div>
 
-            <WrapperHeader gutter={16}>
+            <WrapperHeader>
                 {/* có 24 phần */}
                 <Col span={6}>
                     <WrapperTextHeader> LAPTRINHTHATDE</WrapperTextHeader>
