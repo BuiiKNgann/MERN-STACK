@@ -9,8 +9,9 @@ const TypeProductPage = () => {
 
   }
   return (
-   <div style={{padding: '0 120px', background: '#efefef'}}>  
-<Row style= {{flexWrap:'nowrap', paddingTop: '10px'}}>
+    <div style={{width: '100%', background: '#efefef'}}>
+ <div style={{width: '1270px', margin: '0 auto'}}>  
+<Row style= {{flexWrap: 'nowrap', paddingTop: '10px'}}>
     <WrapperNavbar span= {4}>
     <NavbarComponent/>
     </WrapperNavbar>
@@ -29,6 +30,8 @@ const TypeProductPage = () => {
     </Row>
    
    </div>
+    </div>
+  
   )
 }
 
