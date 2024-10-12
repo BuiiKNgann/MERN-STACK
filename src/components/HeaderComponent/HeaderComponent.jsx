@@ -8,8 +8,14 @@ import {
 } from '@ant-design/icons';
 import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch';
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 const HeaderComponent = () => {
+    const navigate = useNavigate()
+const handleNavigateLogin = () =>{
+    navigate('/sign-in')
+}
     return (
         <div style={{width: '100%', background: 'rgb(26,148,255)', display: 'flex', justifyContent: 'center'}}>
 
@@ -22,7 +28,7 @@ const HeaderComponent = () => {
                 <Col span={13}>
                     <ButtonInputSearch
                         size="large"
-                        bordered={false}
+                        
                         textButton="Tìm kiếm"
                         placeholder="input search text"
                          />
@@ -34,7 +40,7 @@ const HeaderComponent = () => {
                         <UserOutlined style={{ fontSize: '30px' }} />
 
 
-                        <div>
+                        <div onClick={handleNavigateLogin} style={{cursor: 'pointer'}}>
                             <WrapperTextHeaderSmall style={{ fontSize: '12px' }}>Đăng nhập/Đăng ký</WrapperTextHeaderSmall>
                             <div>
                                 <WrapperTextHeaderSmall style={{ fontSize: '12px' }}>Tài khoản</WrapperTextHeaderSmall>
