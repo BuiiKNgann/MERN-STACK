@@ -59,3 +59,14 @@ export const logoutUser = async () => {
         throw error;  
     }
 }
+
+export const updateUser = async (id,data) => {
+    try {
+        const res = await axios.put(`${process.env.REACT_APP_API_URL}/user/update-user/${id}`, data)  
+  
+        return res.data;
+    } catch (error) {
+        console.error('Error logging in:', error);
+        throw error;  
+    }
+}
