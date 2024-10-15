@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel } from './style'
+import { WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel, WrapperUploadFile } from './style'
 import InputForm from '../../components/InputForm/InputForm'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
  import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
  import Loading from '../../components/LoadingComponent/Loading'
 import * as message from '../../components/Message/Message'
+import { updateUser } from '../../redux/slides/userSlide'
+import { Button, Upload } from 'antd'
+import {UploadOutlined} from '@ant-design/icons'
+import { getBase64 } from '../../utils'
 
 const ProfilePage = () => {
 const user = useSelector((state) => state.user)
@@ -17,12 +21,15 @@ const [address, setAddress] = useState('')
 const [avatar, setAvatar] = useState('')
 
 const mutation = useMutationHooks( 
-    (id,data) => UserService.updateUser(id, data)
+    (data) =>{
+      const {id,access_token, ...rests} = data
+      UserService.updateUser(id, data, access_token)
+    }
   )
 
   const dispatch = useDispatch()
  const {data, isPending, isSuccess, isError} = mutation
- console.log('data', data);
+ 
  
 
 useEffect(() => {
@@ -47,7 +54,7 @@ setAvatar(user?.avatar)
 
  const handleGetDetailsUser =async (id, token) => {
     const res = await UserService.getDetailsUser(id, token)
-  dispatch(UserService.updateUser({...res?.data, access_token: token}))
+  dispatch(updateUser({...res?.data, access_token: token}))
   }
 const handleOnchangeEmail = (value) => {
 setEmail(value)
@@ -64,11 +71,15 @@ const handleOnchangeAddress = (value) => {
     setAddress(value)
 }
 
-const handleOnchangeAvatar =  (value) => {
-    setAvatar(value)
+const handleOnchangeAvatar = async ({fileList}) => {
+   const file = fileList[0]
+   if (!file.url && !file.preview) {
+    file.preview = await getBase64(file.originFileObj);
+  }
+  setAvatar(file.preview)
 }
 const handleUpdate = () => {
-    mutation.mutate(user?.id, {email, name, phone, address, avatar})
+    mutation.mutate({id:user?.id, email, name, phone, address, avatar, access_token: user?.access_token})
  
 
 }
@@ -157,7 +168,20 @@ const handleUpdate = () => {
 
         <WrapperInput>
         <WrapperLabel htmlFor="avatar">Avatar</WrapperLabel>
-        <InputForm style={{width: '300px'}} id="avatar" value={avatar}  onChange={handleOnchangeAvatar}/>
+        
+        <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
+        <Button icon={<UploadOutlined />}>Select File</Button>
+      </WrapperUploadFile>
+{avatar && (
+  <img src={avatar} style={{
+    height: '60px',
+    width: '60px',
+    borderRadius: '50%',
+    objectFit: 'cover'
+  }} alt='avatar'/>
+)}
+        
+        {/* <InputForm style={{width: '300px'}} id="avatar" value={avatar}  onChange={handleOnchangeAvatar}/> */}
         <ButtonComponent
  
   onClick={handleUpdate}

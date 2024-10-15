@@ -28,7 +28,7 @@ export const getDetailsUser = async (id, access_token) => {
            headers: {
                 token: `Bearer ${access_token}`,
             }
-        });  
+        },);  
         return res.data;
     } catch (error) {
         console.error('Error logging in:', error);
@@ -60,13 +60,13 @@ export const logoutUser = async () => {
     }
 }
 
-export const updateUser = async (id,data) => {
-    try {
-        const res = await axios.put(`${process.env.REACT_APP_API_URL}/user/update-user/${id}`, data)  
-  
+export const updateUser = async (id,data,access_token) => {
+        const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/user/update-user/${id}`, data, {  
+        headers: {
+            token: `Bearer ${access_token}`,
+        }
+    });  
         return res.data;
-    } catch (error) {
-        console.error('Error logging in:', error);
-        throw error;  
-    }
+ 
+
 }
