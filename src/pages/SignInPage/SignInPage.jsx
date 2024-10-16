@@ -123,7 +123,8 @@ console.log('mutation', mutation);
     onChange={handleOnchangePassword} />
   </div>
    {data?.status === 'ERR' && <span style={{color: 'red'}}>{data?.message}</span>}    
-  <Loading isPending={isPending}>
+  {/* <Loading isPending={isPending}> */}
+   
       <ButtonComponent
   disabled={!email.length || !password.length}
   onClick={handleSignIn}
@@ -139,7 +140,7 @@ console.log('mutation', mutation);
   textButton={'Đăng nhập'}
   styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700'}}
 ></ButtonComponent>
- </Loading>
+ {/* </Loading> */}
  
       <p> <WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
      

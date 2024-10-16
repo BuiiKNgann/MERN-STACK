@@ -1,27 +1,42 @@
 //import axios from 'axios'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { routes } from './routes'
 import DefaultComponent from './components/DefaultComponent/DefaultComponent'
 import { isJsonString } from './utils'
 import { jwtDecode } from "jwt-decode";
 import * as UserService from './services/UserService'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { updateUser } from './redux/slides/userSlide'
 import axios from 'axios'
+import Loading from './components/LoadingComponent/Loading'
+import { isPending } from '@reduxjs/toolkit'
 //import axios from 'axios'
 //import { useQuery } from '@tanstack/react-query'
 
 function App() {
-  const dispatch = useDispatch()
-  useEffect(() => {
-const {storageData, decoded} = handleDecoded()
- console.log('decodedApp', decoded);
-    if(decoded?.id){
-      handleGetDetailsUser(decoded?.id, storageData)
-    }
+  const dispatch = useDispatch();
+  const [isPending, setIsPending] = useState(false)
+  const user = useSelector((state) => state.user)
+//   useEffect(() => {
+//     setIsPending(true)
+// const {storageData, decoded} = handleDecoded()
+//  console.log('decodedApp', decoded);
+//     if(decoded?.id){
+//       handleGetDetailsUser(decoded?.id, storageData)
+//     }
 
-  },[])
+//   },[])
+
+useEffect(() => {
+  const {storageData, decoded} = handleDecoded()
+  if (decoded?.id) {
+    handleGetDetailsUser(decoded?.id, storageData)
+  } else {
+    setIsPending(false) // Không có token hoặc token không hợp lệ
+  }
+}, [])
+
 
   const handleDecoded = () => {
     let storageData = localStorage.getItem('access_token')
@@ -49,33 +64,41 @@ return {decoded,storageData }
 
 
 
-  const handleGetDetailsUser =async (id, token) => {
-    const res = await UserService.getDetailsUser(id, token)
-  dispatch(updateUser({...res?.data, access_token: token}))
-  //dispatch(updateUser(res?.data.name));
+  // const handleGetDetailsUser =async (id, token) => {
+  //   const res = await UserService.getDetailsUser(id, token)
+  // dispatch(updateUser({...res?.data, access_token: token}))
+  //   setIsPending(false)
+  // }
+  const handleGetDetailsUser = async (id, token) => {
+    try {
+      const res = await UserService.getDetailsUser(id, token)
+      dispatch(updateUser({...res?.data, access_token: token}))
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    } finally {
+      setIsPending(false) // Đảm bảo cập nhật trạng thái loading
+    }
   }
-
 
   return (
     <div>
-
-      <Router>
-        <Routes>
-          {routes.map((route) => {
-            const Page = route.page
-            const Layout = route.isShowHeader ? DefaultComponent : Fragment
-            return (
-
-              <Route key={route.path} path={route.path} element={<Layout>
-                <Page />
-              </Layout>} />
-            )
-          })}
-        </Routes>
-
-      </Router>
+      {isPending ? <Loading isPending={isPending} /> : (
+        <Router>
+          <Routes>
+            {routes.map((route) => {
+              const Page = route.page
+              const ischeckAuth = !route.isPrivate || user.isAdmin
+              const Layout = route.isShowHeader ? DefaultComponent : Fragment
+              return (
+                <Route key={route.path} path={ischeckAuth ? route.path : undefined} element={<Layout><Page /></Layout>} />
+              )
+            })}
+          </Routes>
+        </Router>
+      )}
     </div>
   )
+   
 }
 
 export default App
