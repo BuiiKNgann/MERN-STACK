@@ -27,7 +27,7 @@ const {name= '', email= '' , access_token = '', address = '', phone = '', avatar
             state.avatar = avatar;
             state.id = _id;
             state.access_token = access_token;
-            state.isAdmin = true;
+            state.isAdmin = isAdmin;
         },
       
         resetUser: (state) => {

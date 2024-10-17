@@ -19,7 +19,7 @@ const HomePage = () => {
         console.log('res',res);
         return res
     }
-    const {isPending, data: products} = useQuery(['products'],fetchProductAll,{retry: 3, retryDelay: 3})
+    const {isLoading, data: products} = useQuery(['products'],fetchProductAll,{retry: 3, retryDelay: 3})
     console.log('data',products);
     
     return (

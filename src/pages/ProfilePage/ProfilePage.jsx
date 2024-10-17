@@ -28,7 +28,7 @@ const mutation = useMutationHooks(
   )
 
   const dispatch = useDispatch()
- const {data, isPending, isSuccess, isError} = mutation
+ const {data, isLoading, isSuccess, isError} = mutation
  
  
 
@@ -86,7 +86,7 @@ const handleUpdate = () => {
   return (
     <div style={{width: '1270px', margin: '0 auto', height: '500px'}}>
         <WrapperHeader>Thông tin người dùng</WrapperHeader>
-        <Loading isPending={isPending}>
+        <Loading isLoading={isLoading}>
         <WrapperContentProfile>
         <WrapperInput>
         <WrapperLabel htmlFor="name">Name</WrapperLabel>

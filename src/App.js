@@ -10,31 +10,24 @@ import {useDispatch, useSelector} from 'react-redux'
 import { updateUser } from './redux/slides/userSlide'
 import axios from 'axios'
 import Loading from './components/LoadingComponent/Loading'
-import { isPending } from '@reduxjs/toolkit'
+import { isLoading } from '@reduxjs/toolkit'
 //import axios from 'axios'
-//import { useQuery } from '@tanstack/react-query'
+ import { useQuery } from '@tanstack/react-query'
 
 function App() {
   const dispatch = useDispatch();
-  const [isPending, setIsPending] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const user = useSelector((state) => state.user)
-//   useEffect(() => {
-//     setIsPending(true)
-// const {storageData, decoded} = handleDecoded()
-//  console.log('decodedApp', decoded);
-//     if(decoded?.id){
-//       handleGetDetailsUser(decoded?.id, storageData)
-//     }
 
-//   },[])
 
 useEffect(() => {
+  setIsLoading(true)
   const {storageData, decoded} = handleDecoded()
   if (decoded?.id) {
     handleGetDetailsUser(decoded?.id, storageData)
-  } else {
-    setIsPending(false) // Không có token hoặc token không hợp lệ
-  }
+  }  
+  setIsLoading(false) // Không có token hoặc token không hợp lệ
+  
 }, [])
 
 
@@ -76,13 +69,13 @@ return {decoded,storageData }
     } catch (error) {
       console.error("Error fetching user details:", error);
     } finally {
-      setIsPending(false) // Đảm bảo cập nhật trạng thái loading
+     // Đảm bảo cập nhật trạng thái loading
     }
   }
 
   return (
     <div>
-      {isPending ? <Loading isPending={isPending} /> : (
+      <Loading isLoading={isLoading}  >  
         <Router>
           <Routes>
             {routes.map((route) => {
@@ -95,7 +88,7 @@ return {decoded,storageData }
             })}
           </Routes>
         </Router>
-      )}
+     </Loading>
     </div>
   )
    

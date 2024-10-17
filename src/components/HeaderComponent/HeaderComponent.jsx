@@ -15,7 +15,7 @@ import * as UserService from '../../services/UserService';
 import Loading from '../LoadingComponent/Loading';
 
 
-const HeaderComponent = () => {
+const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
     const navigate = useNavigate()
  //   const user = useSelector((state) => state.user)
  const user = useSelector((state) => state.user);
@@ -43,8 +43,12 @@ setLoading(false)
 
 const content = (
     <div>
-      <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
+
       <WrapperContentPopup onClick={()=>navigate('/profile-user')}>Thông tin người dùng</WrapperContentPopup>
+   {user?.isAdmin &&(
+    <WrapperContentPopup onClick={()=>navigate('/system/admin')}>Quản lí hệ thống</WrapperContentPopup>
+   )}
+   <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
     </div>
   );
 console.log('user', user.name.length);
@@ -52,13 +56,14 @@ console.log('user', user.name.length);
     return (
         <div style={{width: '100%', background: 'rgb(26,148,255)', display: 'flex', justifyContent: 'center'}}>
 
-            <WrapperHeader>
+            <WrapperHeader style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset' }}>
                 {/* có 24 phần */}
                 <Col span={5}>
                     <WrapperTextHeader> LAPTRINHTHATDE</WrapperTextHeader>
-
+                 
                 </Col>
-                <Col span={13}>
+                 {!isHiddenSearch && (
+                    <Col span={13}>
                     <ButtonInputSearch
                         size="large"
                         
@@ -67,15 +72,17 @@ console.log('user', user.name.length);
                          />
 
                 </Col>
+                )}
+                
                 <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
-                <Loading isPending={loading}>
+                <Loading isLoading={loading}>
                     <WrapperHeaderAccount>
-{userAvatar ? (
-    <img src={userAvatar}  alt='avatar' style={{
-         height: '30px',
-    width: '30px',
-    borderRadius: '50%',
-    objectFit: 'cover'
+                    {userAvatar ? (
+                        <img src={userAvatar}  alt='avatar' style={{
+                            height: '30px',
+                        width: '30px',
+                        borderRadius: '50%',
+                        objectFit: 'cover'
   
     }}/> 
 ): (
@@ -111,15 +118,16 @@ console.log('user', user.name.length);
 
                     </WrapperHeaderAccount>
 </Loading>
-                    <div>
+{!isHiddenCart && (
+    <div>
                     <Badge count={4} size="small">
                         <ShoppingCartOutlined style={{ fontSize: '30px', color: "#fff" }} />
                         </Badge>
                         <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
 
                     </div>
-
-
+)}
+ 
                 </Col>
             </WrapperHeader>
         </div>

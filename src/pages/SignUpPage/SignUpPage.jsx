@@ -28,7 +28,7 @@ setEmail(value)
   data => UserService.signupUser(data)
 )
 
-const {data, isPending, isSuccess, isError} = mutation
+const {data, isLoading, isSuccess, isError} = mutation
 useEffect(() => {
 if(isSuccess){
    message.success()
@@ -109,7 +109,7 @@ isShowConfirmPassword ? (
   />
  </div>
  {data?.status === 'ERR' && <span style={{color: 'red'}}>{data?.message}</span>}
- <Loading isPending={isPending}>
+  <Loading isLoading={isLoading}> 
  <ButtonComponent
  disabled={!email.length || !password.length || !confirmPassword.length}
  onClick={handleSignUp}
@@ -127,7 +127,8 @@ isShowConfirmPassword ? (
                textButton={'Đăng ký'}
                styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700'}}
      > </ButtonComponent>
-    </Loading>
+     </Loading>
+    
 
      <p>Bạn đã có tài khoản? <WrapperTextLight onClick={handleNavigateSignIn}>Đăng nhập</WrapperTextLight></p>
 

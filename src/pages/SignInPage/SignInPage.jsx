@@ -28,7 +28,7 @@ const SignInPage = () => {
   const mutation = useMutationHooks( 
      data => UserService.loginUser(data)
    )
-  const {data, isPending, isSuccess} = mutation
+  const {data, isLoading, isSuccess} = mutation
 //console.log('mutation', mutation);
 useEffect(() => {
   if(isSuccess){
@@ -123,7 +123,7 @@ console.log('mutation', mutation);
     onChange={handleOnchangePassword} />
   </div>
    {data?.status === 'ERR' && <span style={{color: 'red'}}>{data?.message}</span>}    
-  {/* <Loading isPending={isPending}> */}
+   <Loading isLoading={isLoading}>  
    
       <ButtonComponent
   disabled={!email.length || !password.length}
@@ -140,7 +140,7 @@ console.log('mutation', mutation);
   textButton={'Đăng nhập'}
   styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700'}}
 ></ButtonComponent>
- {/* </Loading> */}
+  </Loading>  
  
       <p> <WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
      
