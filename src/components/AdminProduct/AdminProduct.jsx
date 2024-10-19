@@ -19,6 +19,7 @@ const AdminProduct = () => {
   const [rowSelected, setRowSelected] = useState('');
   const  [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const  [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
+   
   const user = useSelector((state) => state?.user)
   const [stateProduct, setStateProduct] = useState({
     name: '',
@@ -120,7 +121,7 @@ if(rowSelected){
    
   }
   const {data, isLoading, isSuccess, isError} = mutation
-  const {data: dataUpdated, isLoading: isLoadingUpdated, isSuccess: isSucessUpdated, isErrorUpdated} = mutationUpdate
+  const {data: dataUpdated, isLoading: isLoadingUpdated, isSuccess: isSucessUpdated, isError: isErrorUpdated} = mutationUpdate
   console.log('dataUpdated', dataUpdated);
   
   const {isLoading : isLoadingProducts, data: products} = useQuery({queryKey: ['products'], queryFn:getAllProduct})
@@ -197,7 +198,7 @@ if(rowSelected){
       message.error()
     }
   }, [isSucessUpdated])
-
+  
    const handleCancel = () => {
     setIsModalOpen(false);
     setStateProduct({
@@ -264,8 +265,11 @@ const handleOnchangeAvatarDetails = async ({fileList}) => {
 console.log('user', user);
 
 const onUpdateProduct = () =>{
-mutationUpdate.mutate({id: rowSelected, token: user?.access_token, stateProductDetails })
-}
+
+mutationUpdate.mutate({id: rowSelected, token: user?.access_token, stateProductDetails  })
+} 
+
+ 
 
   return (
     <div>
@@ -278,7 +282,7 @@ mutationUpdate.mutate({id: rowSelected, token: user?.access_token, stateProductD
     return {
       onClick: event => {
         setRowSelected(record._id)
-      },  
+      },    
        
     };
   }}/>
@@ -377,7 +381,7 @@ mutationUpdate.mutate({id: rowSelected, token: user?.access_token, stateProductD
     </Loading>
       </Modal>
 <DrawerComponent title='Chi tiết sản phẩm' isOpen={isOpenDrawer} onClose= {() => setIsOpenDrawer(false)} width="90%">
-<Loading isLoading={isLoadingUpdate}>
+<Loading isLoading={isLoadingUpdate || isLoadingUpdated}>
   <Form
       name="basic"
       labelCol={{ span: 2 }}
@@ -475,4 +479,7 @@ mutationUpdate.mutate({id: rowSelected, token: user?.access_token, stateProductD
   )
 }
 
-export default AdminProduct 
+ 
+
+export default AdminProduct;
+ 
