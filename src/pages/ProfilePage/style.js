@@ -41,8 +41,5 @@ export const WrapperUploadFile = styled(Upload)`
 }
 & .ant-upload-list-item-info{
 display: none;
-
 }
-
-
 `
