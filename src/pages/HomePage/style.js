@@ -20,6 +20,8 @@ span {
 }
 width: 100%;
 text-align: center;
+cursor:  ${(props) => props.disabled ? 'not-allowed' : 'pointer'};
+//cursor:  ${(props) => props.disabled ? '#fff' : 'transparent'};
 `
 
 export const WrapperProducts = styled.div`

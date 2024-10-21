@@ -58,8 +58,6 @@ console.log('user', user.name.length);
 const onSearch = (e) => {
     setSearch(e.target.value)
     dispatch(searchProduct(e.target.value))
- 
-
     
 }
     return (
