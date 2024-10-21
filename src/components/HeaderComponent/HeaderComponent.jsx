@@ -11,8 +11,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as UserService from '../../services/UserService';
- import {resetUser} from '../../redux/slides/userSlide'
+ import {resetUser, updateUser} from '../../redux/slides/userSlide'
 import Loading from '../LoadingComponent/Loading';
+import { searchProduct } from '../../redux/slides/productSlide';
 
 
 const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
@@ -22,6 +23,7 @@ const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
     const dispatch= useDispatch()
  const [userName, setUserName] = useState('')
  const [userAvatar, setUserAvatar] = useState('')
+ const [search, setSearch] = useState('')
     const [loading, setLoading] = useState(false)
 const handleNavigateLogin = () =>{
     navigate('/sign-in')
@@ -53,6 +55,13 @@ const content = (
   );
 console.log('user', user.name.length);
 
+const onSearch = (e) => {
+    setSearch(e.target.value)
+    dispatch(searchProduct(e.target.value))
+ 
+
+    
+}
     return (
         <div style={{width: '100%', background: 'rgb(26,148,255)', display: 'flex', justifyContent: 'center'}}>
 
@@ -69,6 +78,7 @@ console.log('user', user.name.length);
                         
                         textButton="Tìm kiếm"
                         placeholder="input search text"
+                        onChange={onSearch}
                          />
 
                 </Col>

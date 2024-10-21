@@ -36,6 +36,37 @@ export const getDetailsUser = async (id, access_token) => {
     }
 }
 
+export const deleteUser = async (id, access_token,data) => {
+ 
+        const res = await axiosJWT.delete(`${process.env.REACT_APP_API_URL}/user/update-user/${id}`, data, {
+           headers: {
+                token: `Bearer ${access_token}`,
+            }
+        },);  
+        return res.data;
+    
+}
+
+
+
+// export const getAllUser = async (access_token) => {
+//     try {
+//       // In token ra console để kiểm tra
+//       console.log('Access token:', access_token);
+      
+//       const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/user/getAll`, {
+//         headers: {
+//           token: `Bearer ${access_token}`,
+//         },
+//       });
+  
+//       console.log('API Response:', res.data); // Kiểm tra phản hồi từ API
+//       return res.data;
+//     } catch (error) {
+//       console.error('Error fetching users from API:', error.response ? error.response.data : error.message); // Log lỗi chi tiết
+//       throw error; // Ném lỗi để cho phía gọi xử lý
+//     }
+//   };
 export const refreshToken = async () => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/user/refresh-token`, {
@@ -47,7 +78,15 @@ export const refreshToken = async () => {
         throw error;  
     }
 }
-
+export const getAllUser = async(access_token) => {
+    const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/user/getAll`,{
+        headers: {
+            token: `Bearer ${access_token}`,
+        }
+    },)
+    return res.data
+}
+  
 
 export const logoutUser = async () => {
     try {
@@ -61,7 +100,7 @@ export const logoutUser = async () => {
 }
 
 export const updateUser = async (id,data,access_token) => {
-        const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/user/update/${id}`, data, {  
+        const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/user/update-user/${id}`, data, {  
         headers: {
             token: `Bearer ${access_token}`,
         }
@@ -70,3 +109,5 @@ export const updateUser = async (id,data,access_token) => {
  
 
 }
+
+ 

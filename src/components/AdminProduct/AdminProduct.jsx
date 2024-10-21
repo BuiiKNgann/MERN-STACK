@@ -158,9 +158,7 @@ if(rowSelected){
       // setSearchText(selectedKeys[0]);
       // setSearchedColumn(dataIndex);
     }
-   
-   
-
+ 
   const handleReset = (clearFilters) => {
     clearFilters();
  //   setSearchText('');
@@ -211,17 +209,7 @@ if(rowSelected){
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
-    // render: text =>
-    //   searchedColumn === dataIndex ? (
-    //     // <Highlighter
-    //     //   highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-    //     //   searchWords={[searchText]}
-    //     //   autoEscape
-    //     //   textToHighlight={text ? text.toString() : ''}
-    //     // />
-    //   ) : (
-    //     text
-    //   ),
+  
   });
 
 
@@ -443,7 +431,7 @@ onSettled: () => {
     };
   }}/>
   </div>
-  <ModalComponent title="Tạo sản phẩm" open={isModalOpen}  onCancel={handleCancel} footer={null}>
+  <ModalComponent forceRender  title="Tạo sản phẩm" open={isModalOpen}  onCancel={handleCancel} footer={null}>
   <Loading isLoading={isLoading}>
   <Form
       name="basic"
