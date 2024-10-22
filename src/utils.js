@@ -24,3 +24,22 @@ export const getBase64 = (file) =>
           type,
         };
       }
+
+
+ 
+    export const renderOptions = (arr) => {
+      let results = []
+      if(arr) {
+        results = arr?.map((opt) => {
+          return {
+            value: opt, 
+            label: opt
+          }
+        })
+      }
+      results.push({
+        label: 'Thêm type',
+        value: 'add_type'
+      })
+      return results
+    }  

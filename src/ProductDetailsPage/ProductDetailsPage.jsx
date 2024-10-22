@@ -6,6 +6,7 @@ const ProductDetailsPage = () => {
   const {id} = useParams()
    const navigate = useNavigate()
   return (
+    
     <div style= {{padding: '0 120px', background: '#efefef', height: '1000px'}}>
 <h5> <span
     style={{ cursor: 'pointer', fontWeight: 'bold' }} 
