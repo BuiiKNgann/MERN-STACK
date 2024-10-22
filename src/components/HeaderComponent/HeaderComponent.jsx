@@ -17,14 +17,15 @@ import { searchProduct } from '../../redux/slides/productSlide';
 
 
 const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
-    const navigate = useNavigate()
+const navigate = useNavigate()
  //   const user = useSelector((state) => state.user)
  const user = useSelector((state) => state.user);
-    const dispatch= useDispatch()
+ const dispatch= useDispatch()
  const [userName, setUserName] = useState('')
  const [userAvatar, setUserAvatar] = useState('')
  const [search, setSearch] = useState('')
-    const [loading, setLoading] = useState(false)
+ const order = useSelector((state)=> state.order)
+const [loading, setLoading] = useState(false)
 const handleNavigateLogin = () =>{
     navigate('/sign-in')
 }   
@@ -92,10 +93,10 @@ const onSearch = (e) => {
                         borderRadius: '50%',
                         objectFit: 'cover'
   
-    }}/> 
-): (
-    <UserOutlined style={{ fontSize: '30px' }} />
-)}
+                            }}/> 
+                        ): (
+                            <UserOutlined style={{ fontSize: '30px' }} />
+                        )}
                    
 
 {user?.access_token? (
@@ -125,10 +126,10 @@ const onSearch = (e) => {
 
 
                     </WrapperHeaderAccount>
-</Loading>
-{!isHiddenCart && (
-    <div onClick={()=> navigate('/order')} style={{cursor: 'pointer'}}>
-                    <Badge count={4} size="small">
+                    </Loading>
+                    {!isHiddenCart && (
+                        <div onClick={()=> navigate('/order')} style={{cursor: 'pointer'}}>
+                    <Badge count={order?.orderItems?.length} size="small">
                         <ShoppingCartOutlined style={{ fontSize: '30px', color: "#fff" }} />
                         </Badge>
                         <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
