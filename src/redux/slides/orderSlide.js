@@ -37,6 +37,7 @@ export const orderSlide = createSlice({
         increaseAmount: (state,action) => {
             const {idProduct} = action.payload
             const itemOrder = state?.orderItems?.find((item) => item?.product === idProduct)
+         //   const itemOrderSelected = state?.orderItems?.find((item) => item?.product === idProduct)
             itemOrder.amount ++
         },
 

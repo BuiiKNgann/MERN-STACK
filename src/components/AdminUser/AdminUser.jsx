@@ -24,27 +24,27 @@ const AdminUser = () => {
   const [isModalOpenDelete, setIsModalOpenDelete]  = useState(false)
   const user = useSelector((state) => state?.user)
   const searchInput = useRef(null);
-  const [stateUser, setStateUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    isAdmin: false,
+  // const [stateUser, setStateUser] = useState({
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  //   isAdmin: false,
     
-  })
+  // })
   const [stateUserDetails, setStateUserDetails] = useState({
     name: '',
     email: '',
     phone: '',
     isAdmin: false,
+    avatar: '',
+    address: ''
     
   })
   const [form] = Form.useForm();
   
   
   const mutationUpdate = useMutationHooks( 
-    (data) =>{  
-      console.log('data', data);
-      
+    (data) =>{   
       const { id,
         token,
          ...rests
@@ -73,25 +73,27 @@ const AdminUser = () => {
     },
    
   )
-
-  const getAllUsers = async () => {
-    return await UserService.getAllUser(user?.access_token); // Thêm token vào đây
-  };
+// Đã check theo video đến đây
+  // const getAllUsers = async () => {
+  //   return await UserService.getAllUser(user?.access_token); // Thêm token vào đây
+  // };
    
 
-  // const getAllUsers = async() => {
-  //   const res = await UserService.getAllUser()
-  //   return res
-  // }
+  const getAllUsers = async() => {
+    const res = await UserService.getAllUser()
+    return res
+  }
 
   const fetchGetDetailsUser = async (rowSelected) => {
     const res = await UserService.getDetailsUser(rowSelected)
     if(res?.data){
       setStateUserDetails({
-        name: res?.data?.name,
+    name: res?.data?.name,
     email: res?.data?.email,
     phone: res?.data?.phone,
     isAdmin: res?.data?.isAdmin,
+    address: res?.data?.address,
+    avatar: res?.data?.avatar,
      
       })
     }
@@ -297,10 +299,10 @@ const handleOnchangeAvatar = async ({fileList}) => {
   if (!file.url && !file.preview) {
    file.preview = await getBase64(file.originFileObj);
  }
- setStateUser({
-  ...stateUser,
-  image:file.preview
- })
+//  setStateUser({
+//   ...stateUser,
+//   image:file.preview
+//  })
  
 }
 

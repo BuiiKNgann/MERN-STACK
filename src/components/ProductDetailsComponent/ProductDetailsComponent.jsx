@@ -12,11 +12,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { addOrderProduct } from '../../redux/slides/orderSlide'
 import { convertPrice } from '../../utils'
+import ModalComponent from '../ModalComponent/ModalComponent'
  
 
 const ProductDetailsComponent = ({idProduct}) => {
   const [numProduct, setNumProduct] = useState(1)
   const user= useSelector((state) => state.user )
+  // const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo ] = useState(false)
  const navigate = useNavigate()
  const location = useLocation()
  const dispatch= useDispatch()
@@ -170,6 +172,7 @@ const ProductDetailsComponent = ({idProduct}) => {
     </div>
     </Col>
   </Row>
+  
   </Loading>
   )
 }
