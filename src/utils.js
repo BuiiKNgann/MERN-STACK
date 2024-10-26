@@ -45,6 +45,8 @@ export const getBase64 = (file) =>
     }  
 
     export const convertPrice = (price) => {
+      console.log('Price', price);
+      
       try{
  const result =  price?.toLocaleString().replaceAll(',', '.')
  return `${result} VND`

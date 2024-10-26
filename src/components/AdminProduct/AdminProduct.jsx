@@ -110,6 +110,7 @@ const AdminProduct = () => {
 
   const getAllProducts = async() => {
     const res = await ProductService.getAllProduct('',100)
+ /// const res = await ProductService.getAllProduct()
     return res
   }
 
@@ -124,7 +125,7 @@ const AdminProduct = () => {
     image: res?.data?.image,
     type: res?.data?.type,
     countInStock: res?.data?.countInStock,
-    discount: res?.data.discount
+    discount: res?.data?.discount
       })
     }
    setIsLoadingUpdate(false)
@@ -562,7 +563,7 @@ onSettled: () => {
         name="discount"
         rules={[{ required: true, message: 'Please input your discount of product!' }]}
       >
-       <InputComponent value={stateProductDetails.discount} onChange={handleOnchangeDetails} name="discount" />
+       <InputComponent value={stateProduct.discount} onChange={handleOnchange} name="discount" />
       </Form.Item>
       <Form.Item
         label="Image"
