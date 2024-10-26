@@ -6,6 +6,7 @@ import { Checkbox } from 'antd';
 import { WrapperInputNumber } from '../../components/ProductDetailsComponent/style';
 import { useDispatch, useSelector } from 'react-redux';
 import { decreaseAmount, increaseAmount, removeOrderProduct } from '../../redux/slides/orderSlide';
+import { convertPrice } from '../../utils';
 const OrderPage = () => {
     const order = useSelector((state) => state.order)
     const dispatch= useDispatch()
@@ -52,7 +53,8 @@ const handleDeleteOrder = (idProduct) => {
                 </WrapperStyleHeader>
                 <WrapperListOrder>
                 {order?.orderItems?.map((order) =>{
-                console.log('map', order)
+                    console.log('checkOrder',order)
+ 
                 return(
                     <WrapperItemOrder>
                     <div style={{width: '390px', display:'flex', alignItems:'center',gap:4}}>
@@ -68,7 +70,7 @@ const handleDeleteOrder = (idProduct) => {
                     </div> 
                     <div style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                     <span>
-                    <span style={{ fontSize: '13px', color: '#424242' }}>{order?.price}</span>
+                    <span style={{ fontSize: '13px', color: '#424242' }}>{convertPrice(order?.price)}</span>
                     {/* <WrapperPriceDiscount>
                     {order?.amount}
                     </WrapperPriceDiscount> */}
@@ -82,7 +84,7 @@ const handleDeleteOrder = (idProduct) => {
                     <PlusOutlined style={{ color: '#000', fontSize: '10px' }} />
                 </button>
                 </WrapperCountOrder>
-                    <span style={{color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500}}>{order?.price *order?.amount}</span>
+                    <span style={{color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500}}>{convertPrice(order?.price *order?.amount)}</span>
                 <DeleteOutlined style={{cursor: 'pointer'}} onClick={() => handleDeleteOrder(order?.product)} />
                 </div>
                     </WrapperItemOrder>
@@ -95,7 +97,7 @@ const handleDeleteOrder = (idProduct) => {
                 <WrapperInfo>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                         <span>Tạm tính</span>
-                        <span style={{color: '#000', fontSize: '14px', fontWeight: 'bold'}}>0</span>
+                        <span style={{color: '#000', fontSize: '14px', fontWeight: 'bold'}}>{convertPrice(order?.price *order?.amount)}</span>
                     </div>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                         <span>Giảm giá</span>
